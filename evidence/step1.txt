@@ -1,0 +1,10 @@
+REQUEST (unauthenticated - passwordless default install, CSRF-exempt): POST /appload
+Host: localhost:8081
+Content-Type: application/x-www-form-urlencoded
+
+app=140902edbcc424c09736af28ab2de604c3bde936
+
+RESPONSE: HTTP/1.1 200 OK
+{"appid":"140902edbcc424c09736af28ab2de604c3bde936","name":"AdGuard Home", ... }
+
+An unauthenticated request installs an "enhanced" application class whose test()/livestats() perform server-side HTTP requests.

@@ -1,0 +1,13 @@
+REQUEST (unauthenticated): POST /test_config with different data[url] targets
+
+  data[url]=http://172.17.0.1:9777/   (reachable internal service, returns 200)
+  data[url]=http://172.17.0.1:9/      (closed internal port)
+  data[url]=http://169.254.169.254/   (cloud metadata / link-local)
+
+RESPONSE (status/port oracle in the response body):
+
+  reachable 200    -> "Successfully communicated with the API"
+  closed port      -> "General error connecting with API"
+  169.254.169.254  -> reached with NO filtering (the guarded ItemController path blocks this IP)
+
+The differing responses let an unauthenticated attacker map internal services/ports and reach the cloud-metadata endpoint.

